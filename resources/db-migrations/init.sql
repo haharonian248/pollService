@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS question;
-DROP TABLE IF EXISTS answer_to_question;
 DROP TABLE IF EXISTS user_question_answer;
+DROP TABLE IF EXISTS answer_to_question;
+DROP TABLE IF EXISTS question;
 
 CREATE TABLE question (
     q_id int(11) NOT NULL AUTO_INCREMENT,

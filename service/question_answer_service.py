@@ -1,0 +1,22 @@
+from typing import Optional, List
+
+from model.question_answer_user_count_response import QuestionAnswerUserCountResponse
+from model.question_user_count_response import QuestionUserCountResponse
+from model.user_answer_response import UserAnswerResponse
+from repository import question_answer_repository
+
+
+async def get_user_count_per_answer_by_question_id(question_id: int) -> Optional[QuestionAnswerUserCountResponse]:
+    return await question_answer_repository.number_of_users_per_answer_per_question(question_id)
+
+async def get_user_count_by_question_id(question_id: int) -> Optional[QuestionUserCountResponse]:
+    return await question_answer_repository.numbers_of_users_answered_by_question_id(question_id)
+
+async def get_user_answers_by_user_id(user_id: int) -> Optional[List[UserAnswerResponse]]:
+    return await question_answer_repository.answers_by_user_id(user_id)
+
+async def get_count_answers_by_user_id(user_id: int) -> Optional[int]:
+    return await question_answer_repository.number_of_questions_answered_by_user_id(user_id)
+
+async def get_total_users_answered_each_option() -> Optional[List[QuestionAnswerUserCountResponse]]:
+    return await question_answer_repository.total_users_answered_each_option()
