@@ -5,6 +5,7 @@ from starlette import status
 
 from model.question_answer_user_count_response import QuestionAnswerUserCountResponse
 from model.question_user_count_response import QuestionUserCountResponse
+from model.user_answer_request import UserAnswerRequest
 from model.user_answer_response import UserAnswerResponse
 from service import question_answer_service
 
@@ -14,10 +15,10 @@ router = APIRouter(
 )
 
 @router.get("/userCountPerAnswer/{question_id}", response_model=List[QuestionAnswerUserCountResponse])
-async def get_user_count_per_answer_by_question_id(question_id: int) -> Optional[QuestionAnswerUserCountResponse]:
-    result = await question_answer_service.get_user_count_per_answer_by_question_id(question_id)
-    if result:
-        return result
+async def get_user_count_per_answer_by_question_id(question_id: int) -> Optional[List[QuestionAnswerUserCountResponse]]:
+    results = await question_answer_service.get_user_count_per_answer_by_question_id(question_id)
+    if results:
+        return results
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Question with question id {question_id} not found")
 
@@ -52,3 +53,18 @@ async def get_total_users_answered_each_option() -> List[QuestionAnswerUserCount
         return results
     else:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
+
+@router.delete("/deleteUserAnswers/{user_id}", response_model=dict)
+async def delete_user_answers_by_user_id(user_id: int):
+    await question_answer_service.delete_user_answers_by_user_id(user_id)
+    return {"message": "User answers deleted successfully"}
+
+@router.post("/insertUserAnswer")
+async def insert_user_answer(user_answer_request: UserAnswerRequest):
+    await question_answer_service.insert_user_answer(user_answer_request)
+    return {"message": "User answer created successfully"}
+
+@router.post("/updateUserAnswer")
+async def update_user_answer(user_answer_request: UserAnswerRequest):
+    await question_answer_service.update_user_answer(user_answer_request)
+    return {"message": "User answer updated successfully"}
