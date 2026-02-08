@@ -29,4 +29,9 @@ async def insert_user_answer(user_answer_request: UserAnswerRequest):
     await question_answer_repository.insert_user_answer(user_answer_request)
 
 async def update_user_answer(user_answer_request: UserAnswerRequest):
-    await question_answer_repository.update_user_answer(user_answer_request)
+    # If the question and answer already exists then no need to update:
+    user_answer_responses = await get_user_answers_by_user_id(user_answer_request.user_id)
+    if any(user_answer_response.q_id == user_answer_request.q_id for user_answer_response in user_answer_responses):
+        return None
+    else:
+        return await question_answer_repository.update_user_answer(user_answer_request)

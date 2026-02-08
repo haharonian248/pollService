@@ -30,7 +30,7 @@ async def get_user_count_by_question_id(question_id: int) -> Optional[QuestionUs
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Question with question id {question_id} not found")
 
-@router.get("/userAnswers/{user_id}", response_model=List[UserAnswerResponse])
+@router.get("/getUserAnswers/{user_id}", response_model=List[UserAnswerResponse])
 async def get_user_answers_by_user_id(user_id: int) -> Optional[List[UserAnswerResponse]]:
     results = await question_answer_service.get_user_answers_by_user_id(user_id)
     if not results:
@@ -66,5 +66,8 @@ async def insert_user_answer(user_answer_request: UserAnswerRequest):
 
 @router.post("/updateUserAnswer")
 async def update_user_answer(user_answer_request: UserAnswerRequest):
-    await question_answer_service.update_user_answer(user_answer_request)
-    return {"message": "User answer updated successfully"}
+    result = await question_answer_service.update_user_answer(user_answer_request)
+    if result is None:
+        return {"message": "User has already put this answer for this question"}
+    else:
+        return {"message": "User answer updated successfully"}

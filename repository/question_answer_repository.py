@@ -52,6 +52,7 @@ async def answers_by_user_id(user_id: int) -> Optional[List[UserAnswerResponse]]
         join question as q on q.q_id = uqa.q_id
         join answer_to_question as aq on aq.a_id=uqa.a_id
         where user_id=:user_id
+        order by q.q_id
     """
 
     results = await database.fetch_all(query, values={"user_id": user_id})
