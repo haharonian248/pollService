@@ -52,10 +52,10 @@ INSERT INTO answer_to_question (a_text, q_id) VALUES
 
 INSERT INTO user_question_answer (user_id, q_id, a_id)
 VALUES
-(1, 1, 2),
-(1, 3, 1),
-(2, 1, 3),
-(3, 2, 1),
-(3, 4, 2),
-(4, 3, 4),
-(5, 5, 2);
+(2, 1, 2),
+(2, 2, 4),
+(2, 4, 13),
+(2, 6, 22),
+(2, 9, 34),
+(4, 3, 8),
+(4, 5, 17);
