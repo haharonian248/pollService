@@ -67,7 +67,8 @@ async def insert_user_answer(user_answer_request: UserAnswerRequest):
 @router.post("/updateUserAnswer")
 async def update_user_answer(user_answer_request: UserAnswerRequest):
     result = await question_answer_service.update_user_answer(user_answer_request)
-    if result is None:
+    if result == 0:
         return {"message": "User has already put this answer for this question"}
-    else:
-        return {"message": "User answer updated successfully"}
+    if result == 1:
+        return {"message": "User has already answered this question, but now updated"}
+    return {"message": "User answer updated successfully"}
