@@ -20,7 +20,7 @@ async def get_user_count_per_answer_by_question_id(question_id: int) -> Optional
     if results:
         return results
     else:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Question with question id {question_id} not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Question with question id {question_id} hasn't been answered by any user")
 
 @router.get("/userCountPerQuestion/{question_id}", response_model=QuestionUserCountResponse)
 async def get_user_count_by_question_id(question_id: int) -> Optional[QuestionUserCountResponse]:
@@ -28,7 +28,7 @@ async def get_user_count_by_question_id(question_id: int) -> Optional[QuestionUs
     if result:
         return result
     else:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Question with question id {question_id} not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Question with question id {question_id} hasn't been answered by any user")
 
 @router.get("/getUserAnswers/{user_id}", response_model=List[UserAnswerResponse])
 async def get_user_answers_by_user_id(user_id: int) -> Optional[List[UserAnswerResponse]]:
